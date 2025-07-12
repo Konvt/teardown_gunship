@@ -40,18 +40,18 @@ function init()
     ),
     ['prjctle_mgr'] = require( 'scripts.prefabs.projectile_mgr' ),
     ['option'] = {
-      ['enable_cd'] = GetBool( 'savegame.mod.controls.enable_cd', true ),
+      ['enable_cd'] = true,
       ['default_cd'] = 0.05,
       ['keys'] = {
-        ['change_type'] = GetString( 'savegame.mod.controls.change_type', 'q' ),
-        ['change_ammo'] = GetString( 'savegame.mod.controls.change_ammo', 'r' ),
+        ['change_type'] = 'q',
+        ['change_ammo'] = 'r',
       },
     },
   }
 
-  SetBool( 'savegame.mod.controls.enable_cd', This.option.enable_cd )
-  SetString( 'savegame.mod.controls.change_type', This.option.keys.change_type )
-  SetString( 'savegame.mod.controls.change_ammo', This.option.keys.change_ammo )
+  This.option.enable_cd = GetBool( 'savegame.mod.controls.enable_cd', This.option.enable_cd )
+  This.option.keys.change_type = GetString( 'savegame.mod.controls.change_type', This.option.keys.change_type )
+  This.option.keys.change_ammo = GetString( 'savegame.mod.controls.change_ammo', This.option.keys.change_ammo )
 end
 
 --- @param dt DeltaTime

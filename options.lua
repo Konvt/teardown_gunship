@@ -27,6 +27,17 @@ function init()
     },
     ['existed_chars'] = { Options.defaults.change_type, Options.defaults.change_ammo },
   }
+
+  Options.current.enable_cd.val = Options.defaults.enable_cd
+  Options.current.change_type.val = Options.defaults.change_type
+  Options.current.change_ammo.val = Options.defaults.change_ammo
+  SetBool( 'savegame.mod.controls.enable_cd', Options.defaults.enable_cd )
+  SetString( 'savegame.mod.controls.change_type', Options.defaults.change_type )
+  SetString( 'savegame.mod.controls.change_ammo', Options.defaults.change_ammo )
+  Options.current.existed_chars = {
+    Options.defaults.change_type,
+    Options.defaults.change_ammo,
+  }
 end
 
 function tick()

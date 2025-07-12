@@ -55,7 +55,10 @@ class LuaPacker:
   def _replace_requires_abs(self, content: str, libreqname: str) -> str:
     libpath = to_path_str(libreqname)
     def repl(m: re.Match) -> str:
-      if os.path.isfile(f'{libpath}{os.sep}{to_path_str(m.group(1))}.lua'):
+      path = to_path_str(m.group(1))
+      # FIXME: 现在无法处理库目录下的 init.lua 转发到另一个 static/init.lua 的情况
+      # 所以暂时需要修改库文件的 init.lua 以适应变化
+      if os.path.isfile(f'{libpath}{os.sep}{path}.lua'):
         return f'require(\'{libreqname}.{m.group(1)}\')'
       return f'require(\'{m.group(1)}\')'
     return re.sub(self.RE_REQUIRE, repl, content)
@@ -113,8 +116,51 @@ class LuaPacker:
       f.write(self.entry_content)
 
 import sys
+import tempfile
+import shutil
+import zipfile
 
 if __name__ == '__main__':
+  if len(sys.argv) == 2 and sys.argv[1] == '.':
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    tmpdir = tempfile.mkdtemp(dir=base_dir)
+    try:
+      tmp_main = os.path.join(tmpdir, 'main.tmp.lua')
+      LuaPacker('main.lua', tmp_main).pack()
+      tmp_options = os.path.join(tmpdir, 'options.tmp.lua')
+      LuaPacker('options.lua', tmp_options).pack()
+
+      final_main = os.path.join(tmpdir, 'main.lua')
+      final_options = os.path.join(tmpdir, 'options.lua')
+      os.rename(tmp_main, final_main)
+      os.rename(tmp_options, final_options)
+
+      to_pack = [
+        'images', 'sounds', 'vox',
+        'info.txt', 'LICENSE', 'README.md',
+        'preview.jpg',
+        final_main, final_options
+      ]
+
+      zip_path = os.path.join(base_dir, 'GunshipAirstrike.zip')
+      with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for item in to_pack:
+          abs_item = os.path.join(base_dir, item) if not os.path.isabs(item) else item
+          if os.path.isdir(abs_item):
+            for root, _, files in os.walk(abs_item):
+              for file in files:
+                rel = os.path.relpath(os.path.join(root, file), base_dir)
+                zipf.write(os.path.join(root, file), rel)
+          elif os.path.isfile(abs_item):
+            if abs_item.startswith(tmpdir):
+              zipf.write(abs_item, os.path.basename(abs_item))
+            else:
+              rel = os.path.relpath(abs_item, base_dir)
+              zipf.write(abs_item, rel)
+    finally:
+      shutil.rmtree(tmpdir)
+    sys.exit(0)
+
   if len(sys.argv) != 3:
     print("Usage: python packer.py <input_file> <output_file>")
     sys.exit(1)

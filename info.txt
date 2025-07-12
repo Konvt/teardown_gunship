@@ -1,4 +1,4 @@
 name = Gunship Airstrike
 author = Konvt
-description = Gunship Airstrike. Press 'Right-Click' to toggle between plane view and ground view. Press 'Q' to toggle between shells. Press 'R' to toggle between ammo. Change Zoom level with mouse scroll. Radio model made by Alagabry. Plane model made by Cheejins. Original scripts written by My Cresta.
+description = Gunship Airstrike with 25mm HE/FMJ machine gun, 40mm HE cannon, 105mm HE cannon, air burst and technical nuclear weapon missile and water, naplam and acid gun. Press 'Right-Click' to toggle between plane view and ground view. Change Zoom level with mouse scroll. Press 'Q' to toggle between shells. Press 'R' to toggle between ammo. Radio model made by Alagabry. Plane model made by Cheejins. Original scripts written by My Cresta. The mod is open source on [url=github.com/Konvt/teardown_gunship] GitHub [/url].
 tags = Tool

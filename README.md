@@ -1,6 +1,8 @@
 # Gunship Airstrike
 A Teardown mod about an AC130 gunship.
 
+Project page: https://github.com/Konvt/teardown_gunship
+
 # Description
 The original scripts are written by My Cresta.
 
