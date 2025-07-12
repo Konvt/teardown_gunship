@@ -1,3 +1,4 @@
 .vscode/
 output*
 *.zip
+__pycache__
