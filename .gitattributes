@@ -1,0 +1,12 @@
+.*       text eol=lf
+*.lua    text eol=lf
+*.json   text eol=lf
+*.py     text eol=lf
+*.txt    text eol=lf
+LICENSE  text eol=lf
+*        -trailing
+
+*.png    -binary
+*.ogg    -binary
+*.tde    -binary
+*.vox    -binary

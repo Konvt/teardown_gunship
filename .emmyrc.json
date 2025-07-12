@@ -1,0 +1,15 @@
+{
+  "diagnostics.globals": [
+    "init",
+    "tick",
+    "draw"
+  ],
+  "runtime.version": "Lua 5.1",
+  "strict": {
+    "requirePath": true
+  },
+  "workspace": {
+    "ignoreDir": ["images", "sounds", "vox"],
+    "library": ["libs/"]
+  }
+}

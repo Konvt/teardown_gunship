@@ -1,0 +1,11 @@
+--- [[
+--- This file is solely for defining type aliases as a secondary wrapper around the game's Lua API types,
+--- to provide unified management and improve readability.
+--- ]]
+
+--- @alias Handle number    Game object handle
+--- @alias Param number     Environment property
+--- @alias DeltaTime number Delta time per frame
+--- @alias SpaceVec TVec    Space Vector
+--- @alias Coord TVec       Coordinate Vector
+--- @alias Pose TTransform  The Transform component of a game object

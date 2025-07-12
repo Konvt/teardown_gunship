@@ -1,0 +1,4 @@
+[submodule "libs/lurti"]
+	path = libs/lurti
+	url = https://github.com/Konvt/lurti.git
+	branch = main

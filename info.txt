@@ -1,0 +1,4 @@
+name = Gunship Airstrike
+author = Konvt
+description = Gunship Airstrike. Press 'Right-Click' to toggle between plane view and ground view. Press 'Q' to toggle between shells. Press 'R' to toggle between ammo. Change Zoom level with mouse scroll. Radio model made by Alagabry. Plane model made by Cheejins. Original scripts written by My Cresta.
+tags = Tool

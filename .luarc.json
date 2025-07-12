@@ -1,0 +1,8 @@
+{
+    "runtime.version": "Lua 5.1",
+    "runtime.plugin": ".vscode/td_vscode_plugin.lua",
+    "workspace.library": [
+        "libs/engine/script_defs.lua",
+        "libs/engine/voxscript_defs.lua"
+    ]
+}
