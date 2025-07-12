@@ -11,7 +11,7 @@ The vox model and sound files come from two different workshop mods: [AC130 Airs
 Based on the original script from [AC130 Airstrike][1], this mod introduces a [class library](https://github.com/Konvt/lurti) and completes a large-scale refactoring.
 
 # Notice
-Because the Lua interpreter of the Teardown engine has disabled the global variable `package` and the function `require`, the mod needs to be packaged into a single Lua file according to the dependency relationship by using `pack.py` in the project root directory to run normally.
+Because the Lua interpreter of the Teardown engine has disabled the global variable `package` and the function `require`, the mod needs to be linked into a single Lua file according to the dependency relationship by using `linker.py` in the project root directory to run normally.
 
 # LICENSE
 This mod is licensed under the [MPL](./LICENSE).
