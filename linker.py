@@ -43,12 +43,31 @@ def find_module_file(candidates: set[str], reqpath: str) -> tuple[str, bool]:
   raise FileNotFoundError(f'files not found in "{reqpath}"')
 
 class LuaLinker:
-  RE_REQUIRE = re.compile(r'require\s*\(?\s*["\']([\w\.]+)["\']\s*\)?')
-  RE_LUA_COMMENT = re.compile(r'--\[\[[\s\S]*?\]\]\n?|--[^\n]*\n?')
+  RE_REQUIRE = re.compile(r'require\s*\(?\s*[\'"]([\w\.]+)[\'"]\s*\)?')
+  RE_STR = re.compile(r'''(['"])(?:\\.|(?!\1).)*\1''')
+  RE_LINE = re.compile(r'--[^\[].*?(?=\n|$)')
+  RE_BLOCK = re.compile(r'--\[\[.*?\]\]', re.S)
+  RE_HEAD_WS = re.compile(r'^[ \t]+', re.M)
+  RE_INNER_WS = re.compile(r'(?<=\S)[ \t]{2,}(?=\S)')
+  RE_SYM_WS = re.compile(r'([^\w\s<>])\s+([^\w\s<>])')
+  RE_EDGE_WS = re.compile(r'\s*([^\w\s<>])\s*')
 
   @classmethod
-  def remove_lua_comments(cls, content: str) -> str:
-    return re.sub(cls.RE_LUA_COMMENT, '', content)
+  def clean_lua(cls, content: str) -> str:
+    strings = []
+    def repl(m):
+      strings.append(m.group())
+      return f'__STR_{len(strings)-1}__'
+    content = cls.RE_STR.sub(repl, content)
+    content = cls.RE_BLOCK.sub('', content)
+    content = cls.RE_LINE.sub('', content)
+    content = cls.RE_HEAD_WS.sub('', content)
+    content = cls.RE_INNER_WS.sub(' ', content)
+    content = cls.RE_SYM_WS.sub(r'\1\2', content)
+    content = cls.RE_EDGE_WS.sub(r'\1', content)
+    for i, s in enumerate(strings):
+      content = content.replace(f'__STR_{i}__', s)
+    return '\n'.join(line for line in content.splitlines() if line.strip())
 
   @classmethod
   def find_require_modules(cls, content: str) -> set[str]:
@@ -65,7 +84,7 @@ class LuaLinker:
     self.searchpaths = {self.basepath}
     self.visited: set[str] = set()
     self.modules: dict[str, str] = {}
-    entry_content = self.remove_lua_comments(
+    entry_content = self.clean_lua(
       read_utf8(os.path.join(self.basepath, self.entry)))
 
     for reqmod in self.find_require_modules(entry_content):
@@ -100,7 +119,7 @@ class LuaLinker:
       return
     self.visited.add(scannedfile)
 
-    content = self.remove_lua_comments(read_utf8(scannedfile))
+    content = self.clean_lua(read_utf8(scannedfile))
     for reqmod in self.find_require_modules(content):
       reqpath = to_path_str(reqmod)
       filepath, is_init_lua = find_module_file(self.searchpaths, reqpath)
