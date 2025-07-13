@@ -134,7 +134,7 @@ end
 --- @class Cluster : Ammo
 --- @field sprite Handle
 local Cluster = lurti.core.object.class( armament.Ammo )
-Cluster.gravity = Vec( 0, -30, 0 )
+Cluster.gravity = Vec( 0, -10, 0 )
 
 --- @param name string
 --- @param sprite Handle
@@ -151,7 +151,7 @@ end
 --- @return SpaceVec
 function Cluster:predict_velocity( dt, velocity )
   -- simulate gravity
-  return VecAdd( velocity, VecScale( Cluster.gravity, dt ) )
+  return VecAdd( velocity, VecScale( Cluster.gravity, 1.1 + dt ) )
 end
 
 --- @generic T
@@ -198,7 +198,7 @@ AirBurst.cluster_amount = 60
 function AirBurst:during_flight( context, next_pos, self_vox )
   local hit_info = physics.RayHit.hit_detect( context.pos,
                                               context.dir,
-                                              15,
+                                              22.5,
                                               context.ignored )
   if hit_info.is_hit then
     Explosion( context.pos, 0.5 )

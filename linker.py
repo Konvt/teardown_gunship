@@ -67,7 +67,7 @@ class LuaLinker:
     content = cls.RE_EDGE_WS.sub(r'\1', content)
     for i, s in enumerate(strings):
       content = content.replace(f'__STR_{i}__', s)
-    return '\n'.join(line for line in content.splitlines() if line.strip())
+    return ' '.join(line for line in content.splitlines() if line.strip())
 
   @classmethod
   def find_require_modules(cls, content: str) -> set[str]:
