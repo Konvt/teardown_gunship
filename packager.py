@@ -8,8 +8,8 @@ import zipfile
 import linker
 
 PackagedFiles = ['images/', 'sounds/', 'vox/',
-           'info.txt', 'LICENSE', 'README.md',
-           'preview.jpg']
+                 'info.txt', 'LICENSE', 'README.md',
+                 'preview.jpg']
 
 if __name__ == '__main__':
   base_dir = os.path.abspath(os.path.dirname(__file__))
