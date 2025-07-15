@@ -29,8 +29,8 @@ function projectile.Projectile:init( shell, lifetime )
 end
 
 --- @return self
-function projectile.Projectile:deepcopy()
-  local obj_cp = projectile.Projectile:new( self.shell )
+function projectile.Projectile:clone()
+  local obj_cp = projectile.Projectile:new( self.shell, self.lifetime:period() )
   obj_cp.position = self.position
   obj_cp.velocity = self.velocity
   obj_cp.vox_body = self.vox_body
