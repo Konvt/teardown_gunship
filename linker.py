@@ -76,35 +76,35 @@ class LuaLinker:
   def __init__(self, entry: str, output: str):
     if not os.path.isfile(entry):
       raise ValueError(f'Expected a file, got: {entry}')
-    self.basepath = os.path.abspath(os.path.dirname(entry))
-    self.entry = os.path.basename(entry)
-    self.output = output
+    self._basepath = os.path.abspath(os.path.dirname(entry))
+    self._entry = os.path.basename(entry)
+    self._output = output
 
   def pack(self):
-    self.searchpaths = {self.basepath}
-    self.visited: set[str] = set()
-    self.modules: dict[str, str] = {}
-    entry_content = self.clean_lua(
-      read_utf8(os.path.join(self.basepath, self.entry)))
+    self._searchpaths = {self._basepath}
+    self._visited: set[str] = set()
+    # self._modules = {'modname': 'content'}
+    self._modules: dict[str, str] = {}
+    entry_content = read_utf8(os.path.join(self._basepath, self._entry))
 
     for reqmod in self.find_require_modules(entry_content):
       reqpath = to_path_str(reqmod)
-      filepath, is_init_lua = find_module_file(self.searchpaths, reqpath)
+      filepath, is_init_lua = find_module_file(self._searchpaths, reqpath)
       if is_init_lua:
         parentdir = os.path.dirname(filepath)
-        self.searchpaths.update([parentdir, os.path.dirname(parentdir)])
+        self._searchpaths.update([parentdir, os.path.dirname(parentdir)])
       self._scan_module(filepath)
     self._write_out(entry_content)
 
   def _replace_requires_abs(self, content: str) -> str:
     def repl(m: re.Match) -> str:
       requiredfile = to_path_str(m.group(1))
-      for path in self.searchpaths:
+      for path in self._searchpaths:
         targetpath = os.path.join(path, requiredfile)
 
         if (os.path.isfile(f'{targetpath}.lua')
             or os.path.isfile(os.path.join(targetpath, 'init.lua'))):
-          modpath = to_mod_str(os.path.relpath(path, self.basepath))
+          modpath = to_mod_str(os.path.relpath(path, self._basepath))
           return f"require( '{'.'.join([modpath, m.group(1)] if modpath else [m.group(1)])}' )"
       raise FileNotFoundError(f'required file "{requiredfile}" not found')
 
@@ -115,24 +115,24 @@ class LuaLinker:
     Args:
       scannedfile: 被扫描文件路径
     '''
-    if scannedfile in self.visited:
+    if scannedfile in self._visited:
       return
-    self.visited.add(scannedfile)
+    self._visited.add(scannedfile)
 
-    content = self.clean_lua(read_utf8(scannedfile))
+    content = self._replace_requires_abs(read_utf8(scannedfile))
     for reqmod in self.find_require_modules(content):
       reqpath = to_path_str(reqmod)
-      filepath, is_init_lua = find_module_file(self.searchpaths, reqpath)
+      filepath, is_init_lua = find_module_file(self._searchpaths, reqpath)
       if is_init_lua:
         parentdir = os.path.dirname(filepath)
-        self.searchpaths.update([parentdir, os.path.dirname(parentdir)])
+        self._searchpaths.update([parentdir, os.path.dirname(parentdir)])
       self._scan_module(filepath)
 
-    modname = to_mod_str(os.path.relpath(scannedfile, self.basepath))
-    self.modules[modname] = f'function(...)\n{self._replace_requires_abs(content)}\nend'
+    modname = to_mod_str(os.path.relpath(scannedfile, self._basepath))
+    self._modules[modname] = content
 
   def _write_out(self, entry_content: str):
-    with open(self.output, 'w', encoding='utf-8') as f:
+    with open(self._output, 'w', encoding='utf-8') as f:
       f.write(textwrap.dedent(f'''\
         --- Copyright (c) 2025 Konvt
         --- This mod is licensed under the Mozilla Public License 2.0.
@@ -158,10 +158,12 @@ class LuaLinker:
             return mod
           end
         end\n'''))
-      for mod, func in self.modules.items():
+      # TODO: 引入静态分析器，分析引用关系并剔除所有未使用子模块
+      for mod, func in self._modules.items():
         f.write(f'package.loaded[\'{mod}\'] = nil\n'
-                f'package.preload[\'{mod}\'] = {func}\n\n')
-      f.write(entry_content)
+                f'package.preload[\'{mod}\'] = function(...)\n'
+                f'{self.clean_lua(func)}\nend\n\n')
+      f.write(self.clean_lua(entry_content))
 
 if __name__ == '__main__':
   import sys
