@@ -12,13 +12,13 @@ local projectile      = {}
 --- @field vox_body Handle | nil
 --- @field lifetime CountdownTimer
 --- @field alive boolean
-projectile.Projectile = lurti.core.object.class( lurti.core.abc.ICopyable )
+projectile.Projectile = lurti.core.meta.class( lurti.core.abc.ICopyable )
 
 --- @param lifetime? DeltaTime
 --- @param shell? Ammo
 --- @return self
 function projectile.Projectile:init( shell, lifetime )
-  lurti.core.object.init_super( projectile.Projectile, self )
+  lurti.core.meta.init_super( projectile.Projectile, self )
   self.shell = shell
   self.position = nil
   self.velocity = nil

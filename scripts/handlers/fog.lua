@@ -9,7 +9,7 @@ local fog = {}
 --- @field private ending Param
 --- @field private amount Param
 --- @field private exp Param
-fog.FogParams = lurti.core.object.class()
+fog.FogParams = lurti.core.meta.class()
 
 --- @param start Param
 --- @param ending Param
@@ -17,7 +17,7 @@ fog.FogParams = lurti.core.object.class()
 --- @param exp Param
 --- @return self
 function fog.FogParams:init( start, ending, amount, exp )
-  lurti.core.object.init_super( fog.FogParams, self )
+  lurti.core.meta.init_super( fog.FogParams, self )
   self.start = start
   self.ending = ending
   self.amount = amount
@@ -41,12 +41,12 @@ end
 --- @field game FogParams
 --- @field custom FogParams
 --- @field is_dirty boolean Indicate whether the fog effect has been updated.
-fog.FogHandler = lurti.core.object.class()
+fog.FogHandler = lurti.core.meta.class()
 
 --- @param custom FogParams
 --- @return self
 function fog.FogHandler:init( custom )
-  lurti.core.object.init_super( fog.FogHandler, self )
+  lurti.core.meta.init_super( fog.FogHandler, self )
   self.game = fog.FogParams.from_game()
   self.custom = custom
   self.is_dirty = false

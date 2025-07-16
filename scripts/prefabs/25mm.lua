@@ -13,14 +13,14 @@ local projectile_mgr  = require( 'scripts.prefabs.projectile_mgr' )
 --- @class Bullet25mm : LaunchableAmmo
 --- @field sprite Handle
 --- @field hit_snd Sound | nil
-local Bullet25mm      = lurti.core.object.class( armament.LaunchableAmmo )
+local Bullet25mm      = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param sprite Handle
 --- @param hit_snd Sound | nil
 --- @return self
 function Bullet25mm:init( name, sprite, hit_snd )
-  lurti.core.object.init_super( Bullet25mm, self, name )
+  lurti.core.meta.init_super( Bullet25mm, self, name )
   self.sprite = sprite
   self.hit_snd = hit_snd
   return self
@@ -60,7 +60,7 @@ end
 
 --- @package
 --- @class FMJ25mm : Bullet25mm
-local FMJ25mm = lurti.core.object.class( Bullet25mm )
+local FMJ25mm = lurti.core.meta.class( Bullet25mm )
 
 --- @param context Context
 --- @param next_pos Coord
@@ -85,7 +85,7 @@ end
 
 --- @package
 --- @class HE25mm : Bullet25mm
-local HE25mm = lurti.core.object.class( Bullet25mm )
+local HE25mm = lurti.core.meta.class( Bullet25mm )
 
 --- @generic T
 --- @param context Context

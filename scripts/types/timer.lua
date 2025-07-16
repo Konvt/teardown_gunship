@@ -8,12 +8,12 @@ local timer = {}
 --- @field protected duration DeltaTime
 --- @field protected current DeltaTime
 --- @field protected is_active boolean
-timer.TrackedTimer = lurti.core.object.class( nil, lurti.core.abc.ABCMeta )
+timer.TrackedTimer = lurti.core.meta.class( nil, lurti.core.abc.ABCMeta )
 
 --- @param duration DeltaTime
 --- @return self
 function timer.TrackedTimer:init( duration )
-  lurti.core.object.init_super( timer.TrackedTimer, self )
+  lurti.core.meta.init_super( timer.TrackedTimer, self )
   self.duration = duration
   self.is_active = false
   return self
@@ -54,12 +54,12 @@ end
 lurti.core.abc.abstract( timer.TrackedTimer, { 'update', 'reset' } )
 
 --- @class CountdownTimer : TrackedTimer
-timer.CountdownTimer = lurti.core.object.class( timer.TrackedTimer )
+timer.CountdownTimer = lurti.core.meta.class( timer.TrackedTimer )
 
 --- @param duration DeltaTime
 --- @return self
 function timer.CountdownTimer:init( duration )
-  lurti.core.object.init_super( timer.CountdownTimer, self, duration )
+  lurti.core.meta.init_super( timer.CountdownTimer, self, duration )
   self.current = duration
   return self
 end
@@ -93,12 +93,12 @@ function timer.CountdownTimer:reset()
 end
 
 --- @class ElapsedTimer : TrackedTimer
-timer.ElapsedTimer = lurti.core.object.class( timer.TrackedTimer )
+timer.ElapsedTimer = lurti.core.meta.class( timer.TrackedTimer )
 
 --- @param duration DeltaTime
 --- @return self
 function timer.ElapsedTimer:init( duration )
-  lurti.core.object.init_super( timer.ElapsedTimer, self, duration )
+  lurti.core.meta.init_super( timer.ElapsedTimer, self, duration )
   --- @type number
   self.current = 0
   return self

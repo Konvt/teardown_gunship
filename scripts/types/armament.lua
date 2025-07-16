@@ -5,12 +5,12 @@ local lurti = require( 'libs.lurti' )
 local armament = {}
 
 --- @class Ammo : Object
-armament.Ammo = lurti.core.object.class( nil, lurti.core.abc.ABCMeta )
+armament.Ammo = lurti.core.meta.class( nil, lurti.core.abc.ABCMeta )
 
 --- @param name string
 --- @return self
 function armament.Ammo:init( name )
-  lurti.core.object.init_super( armament.Ammo, self )
+  lurti.core.meta.init_super( armament.Ammo, self )
   self.name = name
   return self
 end
@@ -42,12 +42,12 @@ end
 lurti.core.abc.abstract( armament.Ammo, 'during_flight' )
 
 --- @class LaunchableAmmo : Ammo
-armament.LaunchableAmmo = lurti.core.object.class( armament.Ammo )
+armament.LaunchableAmmo = lurti.core.meta.class( armament.Ammo )
 
 --- @param name string
 --- @return self
 function armament.LaunchableAmmo:init( name )
-  lurti.core.object.init_super( armament.LaunchableAmmo, self, name )
+  lurti.core.meta.init_super( armament.LaunchableAmmo, self, name )
   return self
 end
 
@@ -66,7 +66,7 @@ lurti.core.abc.abstract( armament.LaunchableAmmo, 'fire' )
 --- @field interval_factor number
 --- @field crosshair_path string
 --- @field shot_snd Sound
-armament.Weapon = lurti.core.object.class()
+armament.Weapon = lurti.core.meta.class()
 
 --- @param name string
 --- @param interval_factor number
@@ -76,7 +76,7 @@ armament.Weapon = lurti.core.object.class()
 --- @return self
 function armament.Weapon:init( name, interval_factor, magazine,
                                crosshair_path, shot_snd )
-  lurti.core.object.init_super( armament.Weapon, self )
+  lurti.core.meta.init_super( armament.Weapon, self )
   self.name            = name
   self.interval_factor = interval_factor
   self.magazine        = magazine

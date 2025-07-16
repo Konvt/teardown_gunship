@@ -12,13 +12,13 @@ local projectile_mgr  = require( 'scripts.prefabs.projectile_mgr' )
 --- @package
 --- @class Missile : LaunchableAmmo
 --- @field sprite Handle
-local Missile         = lurti.core.object.class( armament.LaunchableAmmo )
+local Missile         = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param sprite Handle
 --- @return self
 function Missile:init( name, sprite )
-  lurti.core.object.init_super( Missile, self, name )
+  lurti.core.meta.init_super( Missile, self, name )
   self.sprite = sprite
   return self
 end
@@ -74,7 +74,7 @@ end
 
 --- @package
 --- @class Griffin : Missile
-local TNW = lurti.core.object.class( Missile )
+local TNW = lurti.core.meta.class( Missile )
 
 --- Radius, center of the sphere and direction
 --- @type [number, Coord][]
@@ -133,14 +133,14 @@ end
 --- @package
 --- @class Cluster : Ammo
 --- @field sprite Handle
-local Cluster = lurti.core.object.class( armament.Ammo )
+local Cluster = lurti.core.meta.class( armament.Ammo )
 Cluster.gravity = Vec( 0, -10, 0 )
 
 --- @param name string
 --- @param sprite Handle
 --- @return self
 function Cluster:init( name, sprite )
-  lurti.core.object.init_super( Cluster, self, name )
+  lurti.core.meta.init_super( Cluster, self, name )
   self.sprite = sprite
   return self
 end
@@ -183,7 +183,7 @@ end
 
 --- @package
 --- @class AirBurst : Missile
-local AirBurst = lurti.core.object.class( Missile )
+local AirBurst = lurti.core.meta.class( Missile )
 AirBurst.cluster = Cluster:new( 'Cluster',
                                 LoadSprite( 'MOD/images/bullet_cluster.png' ) )
 AirBurst.max_divergence_angle = math.pi / 6

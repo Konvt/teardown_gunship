@@ -10,13 +10,13 @@ local plane = {}
 --- @field barrel Pose
 --- @field snd Sound
 --- @field firelight_timer CountdownTimer
-plane.PlaneHandler = lurti.core.object.class()
+plane.PlaneHandler = lurti.core.meta.class()
 
 --- @param pose Pose
 --- @param snd Sound
 --- @return self
 function plane.PlaneHandler:init( pose, snd )
-  lurti.core.object.init_super( plane.PlaneHandler, self )
+  lurti.core.meta.init_super( plane.PlaneHandler, self )
   self.itself = pose
   self.barrel = Transform()
   self.barrel.rot = Quat()

@@ -6,12 +6,12 @@ local sound = {}
 
 --- @class Sound : Object
 --- @field handle Handle
-sound.Sound = lurti.core.object.class()
+sound.Sound = lurti.core.meta.class()
 
 --- @param handle Handle
 --- @return self
 function sound.Sound:init( handle )
-  lurti.core.object.init_super( sound.Sound, self )
+  lurti.core.meta.init_super( sound.Sound, self )
   self.handle = handle
   return self
 end
@@ -24,12 +24,12 @@ end
 
 --- @class LoopSound : Sound
 --- @field handle Handle
-sound.LoopSound = lurti.core.object.class( sound.Sound )
+sound.LoopSound = lurti.core.meta.class( sound.Sound )
 
 --- @param handle Handle
 --- @return self
 function sound.LoopSound:init( handle )
-  lurti.core.object.init_super( sound.LoopSound, self, handle )
+  lurti.core.meta.init_super( sound.LoopSound, self, handle )
   return self
 end
 

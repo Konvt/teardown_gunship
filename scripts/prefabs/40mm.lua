@@ -12,13 +12,13 @@ local projectile_mgr  = require( 'scripts.prefabs.projectile_mgr' )
 --- @package
 --- @class Bullet40mm : LaunchableAmmo
 --- @field sprite Handle
-local Bullet40mm      = lurti.core.object.class( armament.LaunchableAmmo )
+local Bullet40mm      = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param sprite Handle
 --- @return self
 function Bullet40mm:init( name, sprite )
-  lurti.core.object.init_super( Bullet40mm, self, name )
+  lurti.core.meta.init_super( Bullet40mm, self, name )
   self.sprite = sprite
   return self
 end

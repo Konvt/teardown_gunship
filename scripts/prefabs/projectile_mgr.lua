@@ -6,11 +6,11 @@ local prjctle_pool = require( 'scripts.prefabs.projectile_pool' )
 
 --- @class ProjectileMgr : Object
 --- @field inflight Projectile[]
-local ProjectileMgr = lurti.core.object.class()
+local ProjectileMgr = lurti.core.meta.class()
 
 --- @return self
 function ProjectileMgr:init()
-  lurti.core.object.init_super( ProjectileMgr, self )
+  lurti.core.meta.init_super( ProjectileMgr, self )
   --- @type Projectile[]
   self.inflight = {}
   return self

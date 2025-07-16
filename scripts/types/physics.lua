@@ -8,14 +8,14 @@ local physics = {}
 --- @field is_hit boolean
 --- @field distance number
 --- @field normal SpaceVec
-physics.RayHit = lurti.core.object.class()
+physics.RayHit = lurti.core.meta.class()
 
 --- @param is_hit boolean
 --- @param distance number
 --- @param normal SpaceVec
 --- @return self
 function physics.RayHit:init( is_hit, distance, normal )
-  lurti.core.object.init_super( physics.RayHit, self )
+  lurti.core.meta.init_super( physics.RayHit, self )
   self.is_hit = is_hit
   self.distance = distance
   self.normal = normal

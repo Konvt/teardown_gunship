@@ -11,7 +11,7 @@ local model = {}
 --- @field antenna [Handle, Pose]
 --- @field aircraft Handle
 --- @field blink [Handle, Pose]
-model.VoxModel = lurti.core.object.class()
+model.VoxModel = lurti.core.meta.class()
 
 --- @param radio_shp Handle
 --- @param antenna_shp Handle
@@ -19,7 +19,7 @@ model.VoxModel = lurti.core.object.class()
 --- @param blink_shp Handle
 --- @return self
 function model.VoxModel:init( radio_shp, antenna_shp, plane_shp, blink_shp )
-  lurti.core.object.init_super( model.VoxModel, self )
+  lurti.core.meta.init_super( model.VoxModel, self )
   self.subject = { radio_shp, GetShapeLocalTransform( radio_shp ) }
   self.antenna = { antenna_shp, GetShapeLocalTransform( antenna_shp ) }
   self.aircraft = plane_shp
@@ -33,13 +33,13 @@ end
 --- @field snd Sound
 --- @field startup_timer ElapsedTimer
 --- @field activated boolean
-model.ModelHandler = lurti.core.object.class()
+model.ModelHandler = lurti.core.meta.class()
 
 --- @param snd Sound
 --- @param boot_delay DeltaTime
 --- @return self
 function model.ModelHandler:init( snd, boot_delay )
-  lurti.core.object.init_super( model.ModelHandler, self )
+  lurti.core.meta.init_super( model.ModelHandler, self )
   --- @type VoxModel
   self.tool_model = model.VoxModel()
   self.body = 0

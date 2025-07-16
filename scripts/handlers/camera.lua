@@ -8,13 +8,13 @@ local camera = {}
 --- @field minimum number
 --- @field maximum number
 --- @field current number
-camera.ZoomHandler = lurti.core.object.class()
+camera.ZoomHandler = lurti.core.meta.class()
 
 --- @param minimum number
 --- @param maximum number
 --- @return self
 function camera.ZoomHandler:init( minimum, maximum )
-  lurti.core.object.init_super( camera.ZoomHandler, self )
+  lurti.core.meta.init_super( camera.ZoomHandler, self )
   self.minimum = minimum
   self.maximum = maximum
   self.current = (minimum + maximum) / 2
@@ -36,13 +36,13 @@ end
 --- @class CameraHandler : ZoomHandler
 --- @field aim_point Coord | nil
 --- @field is_airborne boolean
-camera.CameraHandler = lurti.core.object.class( camera.ZoomHandler )
+camera.CameraHandler = lurti.core.meta.class( camera.ZoomHandler )
 
 --- @param min_zoom number
 --- @param max_zoom number
 --- @return self
 function camera.CameraHandler:init( min_zoom, max_zoom )
-  lurti.core.object.init_super( camera.CameraHandler, self, min_zoom, max_zoom )
+  lurti.core.meta.init_super( camera.CameraHandler, self, min_zoom, max_zoom )
   self.aim_point = nil
   self.is_airborne = false
   return self

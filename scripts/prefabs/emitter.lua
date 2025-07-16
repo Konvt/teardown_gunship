@@ -10,13 +10,13 @@ local projectile_pool = require( 'scripts.prefabs.projectile_pool' )
 local projectile_mgr  = require( 'scripts.prefabs.projectile_mgr' )
 
 --- @class Water: LaunchableAmmo
-local Water           = lurti.core.object.class( armament.LaunchableAmmo )
+local Water           = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param hit_snd Sound
 --- @return self
 function Water:init( name, hit_snd )
-  lurti.core.object.init_super( Water, self, name )
+  lurti.core.meta.init_super( Water, self, name )
   self.hit_snd = hit_snd
   return self
 end
@@ -84,13 +84,13 @@ end
 
 --- @package
 --- @class Napalm: LaunchableAmmo
-local Napalm = lurti.core.object.class( armament.LaunchableAmmo )
+local Napalm = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param hit_snd Sound
 --- @return self
 function Napalm:init( name, hit_snd )
-  lurti.core.object.init_super( Napalm, self, name )
+  lurti.core.meta.init_super( Napalm, self, name )
   self.hit_snd = hit_snd
   return self
 end
@@ -164,13 +164,13 @@ end
 
 --- @package
 --- @class Acid: LaunchableAmmo
-local Acid = lurti.core.object.class( armament.LaunchableAmmo )
+local Acid = lurti.core.meta.class( armament.LaunchableAmmo )
 
 --- @param name string
 --- @param hit_snd Sound
 --- @return self
 function Acid:init( name, hit_snd )
-  lurti.core.object.init_super( Acid, self, name )
+  lurti.core.meta.init_super( Acid, self, name )
   self.hit_snd = hit_snd
   return self
 end
