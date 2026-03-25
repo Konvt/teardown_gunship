@@ -1,4 +1,4 @@
---- Copyright (c) 2025 Konvt
+--- Copyright (c) 2025-2026 Konvt
 --- This file is licensed under the Mozilla Public License 2.0.
 --- See the LICENSE file in the project root for license terms.
 function init()
@@ -49,9 +49,22 @@ function init()
     },
   }
 
-  This.option.enable_cd = GetBool( 'savegame.mod.controls.enable_cd', This.option.enable_cd )
-  This.option.keys.change_type = GetString( 'savegame.mod.controls.change_type', This.option.keys.change_type )
-  This.option.keys.change_ammo = GetString( 'savegame.mod.controls.change_ammo', This.option.keys.change_ammo )
+  if HasKey( 'savegame.mod.controls.enable_cd' ) then
+    This.option.enable_cd = GetBool( 'savegame.mod.controls.enable_cd' )
+  end
+  if HasKey( 'savegame.mod.controls.change_type' ) then
+    local hotkey = GetString( 'savegame.mod.controls.change_type' )
+    -- It's strange that sometime the return value of GetString() is an empty string.
+    if hotkey ~= '' then
+      This.option.keys.change_type = hotkey
+    end
+  end
+  if HasKey( 'savegame.mod.controls.change_ammo' ) then
+    local hotkey = GetString( 'savegame.mod.controls.change_ammo' )
+    if hotkey ~= '' then
+      This.option.keys.change_ammo = hotkey
+    end
+  end
 end
 
 --- @param dt DeltaTime

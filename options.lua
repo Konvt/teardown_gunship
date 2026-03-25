@@ -1,4 +1,4 @@
---- Copyright (c) 2025 Konvt
+--- Copyright (c) 2025-2026 Konvt
 --- This file is licensed under the Mozilla Public License 2.0.
 --- See the LICENSE file in the project root for license terms.
 local util = require( 'scripts.utils.util' )
